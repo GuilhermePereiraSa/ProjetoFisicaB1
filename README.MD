@@ -59,13 +59,6 @@ import numpy as np
 
 
 ```python
-class Particle:
-def **init**(self, pos, vel, mass, radius, color):
-self.pos = np.array(pos, dtype=float)
-self.vel = np.array(vel, dtype=float)
-self.mass = mass
-self.radius = radius
-self.color = color
 
     def kinetic_energy(self):
         # KE = 0.5 * m * v^2
