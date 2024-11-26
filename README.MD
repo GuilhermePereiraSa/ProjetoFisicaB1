@@ -83,6 +83,14 @@ self.color = color
 
 ```
 
+```python
+def calculate_center_of_mass(particles):
+    total_mass = sum(p.mass for p in particles)
+    if total_mass == 0:
+        return np.array([0, 0])
+    weighted_positions = sum(p.mass * p.pos for p in particles)
+    return weighted_positions / total_mass
+```
 ## Referências
 
 - **Livro**: *Computational Physics* (Capítulo 2)
