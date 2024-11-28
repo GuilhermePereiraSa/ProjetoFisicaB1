@@ -34,6 +34,8 @@ def main():
     dx0 = 2.5
     dy0 = -5
     
+    # Atualize as posições da bola branca para perceber as colisões, tanto na bola 0 (bola teste), quanto nas paredes  
+    
     dx1 = -7
     dy1 = -8
     
