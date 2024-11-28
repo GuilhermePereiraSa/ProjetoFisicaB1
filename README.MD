@@ -2,7 +2,7 @@
 ## 📖 Introdução
 Este projeto é uma simulação interativa que combina conceitos de física computacional com a programação de um pequeno jogo. Ele simula as colisões entre partículas (como bolas de sinuca), criando uma interface visual para demonstrar fenômenos físicos como conservação de momento e colisões elásticas.
 
-### Objetivo
+### Objetivos
 - Simular colisões entre partículas e objetos em um ambiente controlado.
 - Demonstrar conceitos de física como conservação de energia e momentum.
 - Criar uma interface visual interativa utilizando a biblioteca Pygame.
@@ -31,7 +31,8 @@ A simulação é controlada por uma interface gráfica, onde o usuário pode ver
 
 ## 🛠 Desenvolvimento
 ### 📦 Estrutura do Projeto
-O projeto está dividido em duas partes principais:
+O projeto está dividido em duas partes principais: o 2d-colision e o pool-game.py.
+Falamos aqui somente do 2d-colision porque é o mais completo do projeto. Fica como observação o 2º projeto, pois ele é mais direto.
 
 ### Simulação de Física:
 
@@ -43,10 +44,10 @@ Interface de Sinuca:
 #### Mesa de Sinuca: Representação gráfica de uma mesa de sinuca usando Pygame.
 - Bolas de Sinuca: Criação de bolas (partículas) que se movem na mesa e colidem entre si.
 - Gerenciamento de colisões com bolsões e bordas: Detecção de colisões das bolas com os limites da mesa e os bolsões.
-##### Fluxo do Código
+#### Fluxo do Código
 O código simula as partículas em um ambiente 2D (mesa de sinuca) onde as bolas colidem entre si e com as bordas. A física das colisões é baseada em conceitos reais de conservação de energia e momentum, com a interação visual sendo feita com Pygame.
 
-###### Partículas são criadas com atributos como massa, posição, velocidade e raio.
+#### Partículas são criadas com atributos como massa, posição, velocidade e raio.
 - Colisões são detectadas e resolvidas usando a física de colisões elásticas (conservação de energia cinética e momentum).
 - Movimento das partículas é calculado a cada quadro com a aplicação de aceleração devido à gravidade e interações de colisão.
 
@@ -55,7 +56,7 @@ import pygame
 import numpy as np
 ```
 
-###### Parte principal do código que trata conceitos físicos
+##### Parte principal do código que trata conceitos físicos
 
 
 ```python
