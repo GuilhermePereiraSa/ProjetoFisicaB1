@@ -85,28 +85,28 @@ import numpy as np
 A energia cinética de um corpo pode ser provada utilizando a relação entre força, deslocamento e trabalho.
 
 Começamos com a definição de trabalho realizado por uma força:
-\[
+\begin{equation}
 W = \int \vec{F} \cdot d\vec{s}
-\]
+\end{equation}
 
 Usando a segunda lei de Newton, temos que a força é dada por:
-\[
+\begin{equation}
 \vec{F} = m \vec{a}
-\]
+\end{equation}
 onde \( m \) é a massa do corpo e \( \vec{a} \) é a aceleração.
 
 Substituímos \( \vec{F} \) na equação do trabalho:
-\[
+\begin{equation}
 W = \int m \vec{a} \cdot d\vec{s}
-\]
+\end{equation}
 
 Sabemos que \( \vec{a} = \frac{d\vec{v}}{dt} \), e podemos reescrever \( d\vec{s} \) em termos de \( \vec{v} \) e \( dt \):
-\[
+\begin{equation}
 d\vec{s} = \vec{v} dt
-\]
+\end{equation}
 
 Substituindo na equação:
-\[
+
 W = \int m \frac{d\vec{v}}{dt} \cdot \vec{v} dt
 \]
 
