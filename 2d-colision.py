@@ -4,7 +4,7 @@ import numpy as np  # Biblioteca para cálculos matemáticos e manipulação de 
 # Configurações principais
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600  # Dimensões da janela da simulação em pixels.
 FPS = 60  # Taxa de quadros por segundo (para animações suaves e consistentes).
-GRAVITY = 9.81  # Aceleração gravitacional em m/s².
+GRAVITY = 9.8  # Aceleração gravitacional em m/s².
 
 # Definição de cores em formato RGB.
 WHITE = (255, 255, 255)  # Cor branca (fundo).
@@ -216,9 +216,9 @@ def main():
 
     # Cria uma lista de partículas com posições, velocidades, massas, raios e cores iniciais.
     particles = [
-        Particle(pos=[200, 400], vel=[60, -40], mass=1, radius=10, color=RED),
-        Particle(pos=[400, 200], vel=[-50, 30], mass=2, radius=12, color=BLUE),
-        Particle(pos=[600, 500], vel=[40, -30], mass=1.5, radius=15, color=GREEN),
+        Particle(pos=[400, 300], vel=[60, -40], mass=10, radius=10, color=RED),
+        Particle(pos=[420, 300], vel=[-50, 30], mass=10, radius=12, color=BLUE),
+        Particle(pos=[440,3500], vel=[40, -30], mass=10, radius=14, color=GREEN),
     ]
 
     show_vectors = False  # Controle para exibir ou ocultar vetores de velocidade.
