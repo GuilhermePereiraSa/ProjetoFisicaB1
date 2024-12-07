@@ -56,145 +56,27 @@ import pygame
 import numpy as np
 ```
 
-##### Parte principal do código que trata conceitos físicos
+## 🔬 Fluxo do Código
 
-```python
+O código simula partículas em um ambiente 2D (mesa de sinuca), com física baseada em:
 
-    def kinetic_energy(self):
-        # KE = 0.5 * m * v^2
-        velocity_magnitude = np.linalg.norm(self.vel)
-        return 0.5 * self.mass * velocity_magnitude**2
+### Energia Cinética
+A energia cinética (𝐸𝑘) é a energia associada ao movimento de um objeto. Ela depende da massa (𝑚) do objeto e da sua velocidade (𝑣).
+E_k = (1/2) * m * v^2
 
-    def potential_energy(self, ground_level=0):
-        # PE = m * g * h (h é a altura acima do chão)
-        height = max(0, self.pos[1] - self.radius - ground_level)
-        return self.mass * GRAVITY * height
+### Energia Potencial
+A energia potencial (𝐸𝑝) é a energia armazenada devido à posição de um objeto em um campo de forças, como o campo gravitacional.
+E_p = m * g * h
 
-    def mechanical_energy(self, ground_level=0):
-        # ME = KE + PE
-        return self.kinetic_energy() + self.potential_energy(ground_level)
+No código, a energia potencial varia de acordo com a altura da partícula em relação ao "chão" ou à borda inferior da mesa de sinuca. Quando a partícula está no chão (h=0), sua energia potencial é zero.
 
-```
+### Energia Mecânica
+E_m = E_p + E_k
 
-#### Parte explicativa dos conceitos físicos:
+### Centro de Massa
+x_cm = (Σ(m_i * x_i)) / (Σ m_i)
 
-##### A energia cinética é calculada sempre desta forma, pois independe do sistema, de suas forças aplicadas, se são conservativas, etc., isto porque é algo "pertencente" do objeto, depende de sua velocidade, $$\vec{v}$$, e de sua carga inercial, $$m$$
-
-```markdown
-    
-A energia cinética de um corpo pode ser provada utilizando a relação entre força, deslocamento e trabalho.
-
-Começamos com a definição de trabalho realizado por uma força:
-\begin{equation}
-W = \int \vec{F} \cdot d\vec{s}
-\end{equation}
-
-Usando a segunda lei de Newton, temos que a força é dada por:
-\begin{equation}
-\vec{F} = m \vec{a}
-\end{equation}
-onde \( m \) é a massa do corpo e \( \vec{a} \) é a aceleração.
-
-Substituímos \( \vec{F} \) na equação do trabalho:
-\begin{equation}
-W = \int m \vec{a} \cdot d\vec{s}
-\end{equation}
-
-Sabemos que \( \vec{a} = \frac{d\vec{v}}{dt} \), e podemos reescrever \( d\vec{s} \) em termos de \( \vec{v} \) e \( dt \):
-\begin{equation}
-d\vec{s} = \vec{v} dt
-\end{equation}
-
-Substituindo na equação:
-
-W = \int m \frac{d\vec{v}}{dt} \cdot \vec{v} dt
-\]
-
-Cancelando \( dt \) e reescrevendo a equação:
-\[
-W = \int m \vec{v} \cdot d\vec{v}
-\]
-
-Expandindo o produto escalar \( \vec{v} \cdot d\vec{v} \), temos:
-\[
-W = m \int v \, dv
-\]
-
-Integrando:
-\[
-W = \frac{1}{2} m v^2 + C
-\]
-
-Assumindo \( C = 0 \) para o caso inicial, o trabalho realizado é igual à energia cinética:
-\[
-W = \frac{1}{2} m v^2
-\]
-
-Assim, mostramos que a energia cinética é dada por:
-\[
-E_k = \frac{1}{2} m v^2
-\]
-```
-##### A energia potêncial depende da posição em relação à algo, geralmente ao "chão", aqui é do mesmo modo, com o limite "bottom", percebe-se que a energia potêncial do objeto partícula ao tocar no chão é 0. 
-
-```markdown 
-**Definição de Força Conservativa**  
-A energia potencial em um campo de forças conservativas é definida como:
-\[
-E_p(r) = - \int \vec{F} \cdot d\vec{r},
-\]
-onde \(\vec{F}\) é a força que age no sistema e \(d\vec{r}\) é o deslocamento infinitesimal.
-
-**Força Gravitacional**  
-No caso da queda livre, a força que atua é o peso do corpo, dado por:
-\[
-\vec{F} = m\vec{g},
-\]
-onde \(m\) é a massa do corpo e \(\vec{g}\) é o vetor aceleração da gravidade.
-
-**Escolha do Referencial**  
-Escolhemos um referencial em que o deslocamento ocorre ao longo do eixo vertical (\(z\)), positivo para cima. Assim:
-\[
-d\vec{r} = dz \hat{k}.
-\]
-A força gravitacional aponta para baixo (\(-\hat{k}\)), e o produto escalar \(\vec{F} \cdot d\vec{r}\) é:
-\[
-\vec{F} \cdot d\vec{r} = -mg \, dz.
-\]
-
-**Cálculo da Energia Potencial**  
-Substituímos a expressão da força no cálculo da energia potencial:
-\[
-E_p(z) = - \int \vec{F} \cdot d\vec{r} = - \int (-mg) \, dz.
-\]
-
-**Integração**  
-A integral resulta em:
-\[
-E_p(z) = \int mg \, dz = mgz + C,
-\]
-onde \(C\) é a constante de integração.
-
-**Definição do Referencial**  
-Escolhemos o referencial em que a energia potencial é zero (\(E_p = 0\)) no nível \(z = 0\). Assim, \(C = 0\) e a energia potencial é:
-\[
-E_p(z) = mgz.
-\]
-
-**Substituição do Altura (\(h\))**  
-Chamando a coordenada vertical \(z\) de altura \(h\), obtemos:
-\[
-E_p(h) = mgh.
-\]
-
-```
-
-
-##### Agora a energia mecânica é a soma da energia potêncial e cinética, e dependendo do sistema, i.e, se for constituido apenas de forças conservativas, a $$E_m$$ será 0.
-
-```markdown
-$$E_m = E_p + E_c $$
-```
+### Exemplo de cálculo do centro de massa
 
 ```python
 def calculate_center_of_mass(particles):
@@ -205,16 +87,31 @@ def calculate_center_of_mass(particles):
     return weighted_positions / total_mass
 ```
 
-##### O conceito de centro de massa foi introduzido em Cálculo II, onde as principais variáveis são: ρ(x) com a somatória das massas, em que cada massa i é multiplicada por sua posição, sua largura na função, na posição i, sendo tudo isso dividido pela somatória total das massas. Só que aqui em física básica 1 a gente só faz uma média ponderada.
+## 🎯 Conceitos Avançados
 
-\[
-x_{\text{cm}} = \frac{\sum_{i=1}^{n} m_i \cdot x_i}{\sum_{i=1}^{n} m_i}
-\]
+### Conservação do Momento Linear
+Durante uma colisão:
+
+P_total = Σ(m_i * v_i) (antes) = Σ(m_i * v_i) (depois)
 
 
-#### Conceitos básicos do código
+### Coeficiente de Restituição
+Define a elasticidade da colisão:
 
-Quando criamos um simulador de partículas, precisamos representar cada partícula e implementar métodos para calcular suas interações físicas. 
+- 1: Colisão perfeitamente elástica.
+- 0: Colisão perfeitamente inelástica.
+- 0 < rest < 1: Colisão parcialmente elástica.
+
+### Impulso no código
+
+O impulso é a força média aplicada durante uma colisão:
+
+**Fórmula geral do impulso:**
+J = ΔP = F · Δt
+
+**Impulso no código:**
+J = [-(1 + rest) · v_rel] / [(1/m1) + (1/m2)]
+
 
 ### Representação das Partículas e Sistema de Coordenadas
 
@@ -227,68 +124,9 @@ A imagem abaixo ilustra três possíveis casos de detecção de colisão:
 
 ![3 Casos da Detecção](img/3casosDeteccao.png)
 
-## Conceito Final
 
-### Conservação do Momento Linear
-
-A **conservação do momento linear** é um princípio implícito no código. Durante uma colisão, o momento total do sistema (soma do produto da massa pela velocidade de todas as partículas) permanece constante. No código, isso é implementado ajustando as velocidades das partículas proporcionalmente às suas massas, aplicando o impulso gerado pela colisão.
-
-### Coeficiente de Restituição
-
-O **coeficiente de restituição** (`restitution`) define a elasticidade da colisão, influenciando a fração da velocidade relativa mantida após a colisão:
-
-- `restitution = 1`: Colisão perfeitamente elástica (sem perda de energia cinética).
-- \(0 < \text{restitution} < 1\): Colisão parcialmente elástica (há dissipação de energia).
-- `restitution = 0`: Colisão perfeitamente inelástica (as partículas "grudam").
-
-No sistema, utilizamos `restitution = 0.9`, indicando uma colisão predominantemente elástica, mas com alguma dissipação de energia.
-
-### Conceito de Impulso
-
-O **impulso** é a grandeza física responsável por alterar o momento linear de um corpo durante uma colisão. Ele é definido como:
-
-\[
-\mathbf{J} = \Delta \mathbf{P}
-\]
-
-onde \(\Delta \mathbf{P}\) é a variação do momento linear. Em termos práticos, o impulso é o produto da força média aplicada a um corpo pelo intervalo de tempo durante o qual ela atua:
-
-\[
-\mathbf{J} = \mathbf{F} \cdot \Delta t
-\]
-
-No código, o impulso escalar é calculado como:
-
-\[
-J = \frac{-(1 + \text{restitution}) \cdot v_{\text{rel,along normal}}}{\frac{1}{m_1} + \frac{1}{m_2}}
-\]
-
-Onde:
-
-- `restitution`: Coeficiente de restituição.
-- \(v_{\text{rel,along normal}}\): Velocidade relativa das partículas ao longo do vetor normal de colisão.
-- \(m_1\) e \(m_2\): Massas das partículas.
-
-O vetor impulso é dado por:
-
-\[
-\mathbf{J} = J \cdot \mathbf{n}
-\]
-
-onde \(\mathbf{n}\) é o vetor normal à superfície de colisão.
-
-O impulso é aplicado proporcionalmente às massas das partículas para ajustar suas velocidades, garantindo a conservação do momento linear e respeitando o coeficiente de restituição:
-
-\[
-\mathbf{v}_{1,\text{depois}} = \mathbf{v}_{1,\text{antes}} + \frac{\mathbf{J}}{m_1}
-\]
-
-\[
-\mathbf{v}_{2,\text{depois}} = \mathbf{v}_{2,\text{antes}} - \frac{\mathbf{J}}{m_2}
-\]
 
 ## Referências
 
 - **Livro**: *Computational Physics* (Capítulo 2)
 - **Canal**: *Reducible* – [Building Collision Simulations](https://www.youtube.com/watch?v=eED4bSkYCB8&ab_channel=Reducible)
-- BERNARDES, Esmerindo. Materiais Didáticos: **Notas de Aula**. Disponível em: <edisciplinas.usp.br>. Acesso em: 6 dez. 2024.
