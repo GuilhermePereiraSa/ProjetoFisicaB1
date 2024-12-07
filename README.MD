@@ -58,23 +58,39 @@ import numpy as np
 
 ## 🔬 Fluxo do Código
 
-O código simula partículas em um ambiente 2D (mesa de sinuca), com física baseada em:
+O código simula partículas em um ambiente 2D, com física baseada em:
+
+Cada partícula é representada por uma posição em 2D, onde:
+
+- `pos[0]`: Coordenada \(x\).
+- `pos[1]`: Coordenada \(y\).
+
+A imagem abaixo ilustra três possíveis casos de detecção de colisão:
+
+![3 Casos da Detecção](img/3casosDeteccao.png)
+
+
+Agora trabalhamos com as energias, colocando brutalmente conceitos físicos aqui
 
 ### Energia Cinética
 A energia cinética (𝐸𝑘) é a energia associada ao movimento de um objeto. Ela depende da massa (𝑚) do objeto e da sua velocidade (𝑣).
-E_k = (1/2) * m * v^2
+
+![Energia cinética](img/energiacinetica.png)
 
 ### Energia Potencial
 A energia potencial (𝐸𝑝) é a energia armazenada devido à posição de um objeto em um campo de forças, como o campo gravitacional.
-E_p = m * g * h
+
+![Energia potêncial](img/energiapotencial.png)
 
 No código, a energia potencial varia de acordo com a altura da partícula em relação ao "chão" ou à borda inferior da mesa de sinuca. Quando a partícula está no chão (h=0), sua energia potencial é zero.
 
 ### Energia Mecânica
-E_m = E_p + E_k
+
+![Energia mecânica](img/energiamecanica.png)
 
 ### Centro de Massa
-x_cm = (Σ(m_i * x_i)) / (Σ m_i)
+
+![Centro de massa](img/centrodemassa.png)
 
 ### Exemplo de cálculo do centro de massa
 
@@ -89,41 +105,26 @@ def calculate_center_of_mass(particles):
 
 ## 🎯 Conceitos Avançados
 
-### Conservação do Momento Linear
+Agora precisamos lidar quando a colisão é feita. (No caso das paredes são apenas if's e else's), mas para lidar com a colisão entre dois corpos é necessário:
+
+- ### Conservação do Momento Linear
 Durante uma colisão:
 
-P_total = Σ(m_i * v_i) (antes) = Σ(m_i * v_i) (depois)
+![Conservação do momentum linear](img/cons-p.png)
 
-
-### Coeficiente de Restituição
+- ### Coeficiente de Restituição
 Define a elasticidade da colisão:
 
 - 1: Colisão perfeitamente elástica.
 - 0: Colisão perfeitamente inelástica.
 - 0 < rest < 1: Colisão parcialmente elástica.
 
-### Impulso no código
+![Restituição](img/restituicao.png)
+
 
 O impulso é a força média aplicada durante uma colisão:
 
-**Fórmula geral do impulso:**
-J = ΔP = F · Δt
-
-**Impulso no código:**
-J = [-(1 + rest) · v_rel] / [(1/m1) + (1/m2)]
-
-
-### Representação das Partículas e Sistema de Coordenadas
-
-Cada partícula é representada por uma posição em 2D, onde:
-
-- `pos[0]`: Coordenada \(x\).
-- `pos[1]`: Coordenada \(y\).
-
-A imagem abaixo ilustra três possíveis casos de detecção de colisão:
-
-![3 Casos da Detecção](img/3casosDeteccao.png)
-
+![Restituição 2](img/restituicao2.png)
 
 
 ## Referências
